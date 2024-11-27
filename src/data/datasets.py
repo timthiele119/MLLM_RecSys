@@ -25,22 +25,25 @@ class AmazonDataset(Dataset):
     """
     
     def __init__(self, root, datasetConfig, datasetName):
-        self.root = root
         self.datasetConfig = datasetConfig
         self.datasetName = datasetName
         
+        print(f"Reading config file at {datasetConfig}")
         with open(datasetConfig, "r") as configFile:
             configData = json.load(configFile)
             self.datasetConfig = configData.get(datasetName, {})
             print(f"Dataset Config set as:")
             pprint.pp(self.datasetConfig)
+            
         self.category = self.datasetConfig.get("category")
+        self.root = Path(root) / f"{self.category}"
+        
         urls = self.datasetConfig.get("urls", {})
         self.interactionDataUrl = urls.get("interactionDataUrl", "default_interaction_data_url")
         self.metaDataUrl = urls.get("metaDataUrl", "default_meta_data_url")
         self.reviewDataUrl = urls.get("reviewDataUrl", "default_review_data_url")
         
-        self.rawDataDir = Path(self.root) / "raw"
+        self.rawDataDir = self.root / "raw"
         self.rawDataDir.mkdir(parents=True, exist_ok=True)
 
         self.downloadInteractionData()
@@ -111,7 +114,7 @@ class AmazonDataset(Dataset):
     @tryExcept
     @timeMeasured
     def unwrapItemData(self, datasetPath):
-        rawUnwrappedItemDataDir = self.rawDataDir / "Items" / "Unwrapped" / self.datasetName
+        rawUnwrappedItemDataDir = self.rawDataDir / "Items" / "Unwrapped"
         os.makedirs(rawUnwrappedItemDataDir, exist_ok=True)
         
         with gzip.open(datasetPath, "rt", encoding="utf-8") as f:
@@ -130,15 +133,3 @@ class AmazonDataset(Dataset):
         
         print(f"Unwrapped dataset from {datasetPath}")
         print(f"Saved {len(self.dumpedJSONlist)} from a total of {linesCount} lines.")
-
-        
-        
-            
-            
-if __name__ == "__main__":
-    
-    root="data/AmazonReviews"
-    os.makedirs(root, exist_ok=True)
-    datasetConfigAmazon = "src/data/datasetConfigAmazon.json"
-    datasetName = "AmazonAllBeautyDataset"
-    AmazonBeautyDataset = AmazonDataset(root, datasetConfigAmazon, datasetName)

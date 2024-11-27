@@ -111,8 +111,8 @@ class AmazonDataset(Dataset):
     @tryExcept
     @timeMeasured
     def unwrapItemData(self, datasetPath):
-        rawUnwrappedDataDir = self.rawDataDir / "Items" / "Unwrapped" / self.datasetName
-        os.makedirs(rawUnwrappedDataDir, exist_ok=True)
+        rawUnwrappedItemDataDir = self.rawDataDir / "Items" / "Unwrapped" / self.datasetName
+        os.makedirs(rawUnwrappedItemDataDir, exist_ok=True)
         
         with gzip.open(datasetPath, "rt", encoding="utf-8") as f:
             linesCount, self.dumpedJSONlist = 0, []
@@ -121,7 +121,7 @@ class AmazonDataset(Dataset):
                 jsonLine = json.loads(line.strip())
                 if self.checkRequiredFields(jsonLine):  # Only save if required fields are valid
                     parent_asin = jsonLine.get("parent_asin")
-                    outputFilePath = rawUnwrappedDataDir / f"{parent_asin}.json"
+                    outputFilePath = rawUnwrappedItemDataDir / f"{parent_asin}.json"
                     with open(outputFilePath, "w", encoding="utf-8") as outputFile:
                         json.dump(jsonLine, outputFile, indent=4)
                     self.dumpedJSONlist.append(parent_asin)
@@ -137,7 +137,7 @@ class AmazonDataset(Dataset):
             
 if __name__ == "__main__":
     
-    root="data/Test"
+    root="data/AmazonReviews"
     os.makedirs(root, exist_ok=True)
     datasetConfigAmazon = "src/data/datasetConfigAmazon.json"
     datasetName = "AmazonAllBeautyDataset"

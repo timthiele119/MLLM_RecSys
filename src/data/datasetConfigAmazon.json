@@ -17,5 +17,23 @@
             "price": false,
             "details": false
         }
+    },
+    "AmazonBooksDataset": {
+        "category": "Books",
+        "urls": {
+            "interactionDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/benchmark/5core/timestamp_w_his/",
+            "metaDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/raw/meta_categories/",
+            "reviewDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/raw/review_categories/"
+        },
+        "required_fields": {
+            "parent_asin": true,
+            "description": true,
+            "images": true,
+            "title": true,
+            "average_rating": false,
+            "features": false,
+            "price": false,
+            "details": false
+        }
     }
 }

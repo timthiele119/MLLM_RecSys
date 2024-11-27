@@ -24,7 +24,8 @@ class AmazonDataset(Dataset):
     Overview: https://amazon-reviews-2023.github.io/main.html
     """
     
-    def __init__(self, root, datasetConfig, datasetName):
+    def __init__(self, root, datasetConfig, datasetName, devCtrl=False):
+        self.devCtrl = devCtrl
         self.datasetConfig = datasetConfig
         self.datasetName = datasetName
         
@@ -128,7 +129,7 @@ class AmazonDataset(Dataset):
                     with open(outputFilePath, "w", encoding="utf-8") as outputFile:
                         json.dump(jsonLine, outputFile, indent=4)
                     self.dumpedJSONlist.append(parent_asin)
-                if linesCount == 100:
+                if linesCount == 100 and self.devCtrl:
                     break
         
         print(f"Unwrapped dataset from {datasetPath}")

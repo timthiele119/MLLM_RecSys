@@ -36,3 +36,16 @@ def timestampToYear(timestamp):
         return dt_object.year
     except (ValueError, TypeError, OverflowError):
         return None
+
+    
+def binarizeEdgesByThreshold(dat, thres):
+    """
+    Transform function that assign non-negative entries >= thres 1, and non-
+    negative entries <= thres 0. Keep other entries the same.
+    """
+    thres = thres[0]
+    matrix = dat['edge_index']
+    matrix[(matrix < thres) & (matrix > -1)] = 0
+    matrix[(matrix >= thres)] = 1
+    dat['edge_index'] = matrix
+    return dat

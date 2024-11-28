@@ -1,39 +1,49 @@
 {
     "__comment": "Amazon datasets available: https://amazon-reviews-2023.github.io/data_processing/5core.html",
+    
     "AmazonAllBeautyDataset": {
         "category": "All_Beauty",
         "urls": {
-            "interactionDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/benchmark/5core/timestamp_w_his/",
+            "interactionDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/benchmark/5core/rating_only/",
             "metaDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/raw/meta_categories/",
             "reviewDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/raw/review_categories/"
         },
-        "required_fields": {
-            "parent_asin": true,
-            "description": true,
-            "images": true,
-            "title": true,
-            "average_rating": false,
-            "features": false,
-            "price": false,
-            "details": false
+        "filterCriteria": {
+            "requiredFields": {
+                "parent_asin": true,
+                "description": false,
+                "images": false,
+                "title": false,
+                "average_rating": false,
+                "features": false,
+                "price": false,
+                "details": false
+            },
+            "filterItemsBasedOnFeatures": true,
+            "filterkInteractions": 3
         }
     },
-    "AmazonBooksDataset": {
-        "category": "Books",
+
+    "AmazonIndustrialDataset": {
+        "category": "Industrial_and_Scientific",
         "urls": {
-            "interactionDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/benchmark/5core/timestamp_w_his/",
+            "interactionDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/benchmark/5core/rating_only/",
             "metaDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/raw/meta_categories/",
             "reviewDataUrl": "https://datarepo.eng.ucsd.edu/mcauley_group/data/amazon_2023/raw/review_categories/"
         },
-        "required_fields": {
-            "parent_asin": true,
-            "description": true,
-            "images": true,
-            "title": true,
-            "average_rating": false,
-            "features": false,
-            "price": false,
-            "details": false
+        "filterCriteria": {
+            "requiredFields": {
+                "parent_asin": true,
+                "description": true,
+                "images": true,
+                "title": true,
+                "average_rating": false,
+                "features": false,
+                "price": false,
+                "details": false
+            },
+            "filterItemsBasedOnFeatures": true,
+            "filterkInteractions": 5
         }
     }
 }

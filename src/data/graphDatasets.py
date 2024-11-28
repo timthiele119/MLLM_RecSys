@@ -182,10 +182,12 @@ class AmazonGraphDataset(AmazonDataset):
         # Add user data
         data['user'].x = user_node_features
         data['user'].node_id = user_ids
+        data['user'].num_nodes = user_node_features.shape[0]
         
         # Add item data
         data['item'].x = item_node_features
         data['item'].node_id = item_ids
+        data['user'].num_nodes = item_node_features.shape[0]
         
         # Add edges
         data['user', 'rates', 'item'].edge_index = edge_index

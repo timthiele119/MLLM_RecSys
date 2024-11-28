@@ -88,6 +88,10 @@ class AmazonGraphDataset(Dataset):
         #     # data = self.transform(data, self.transform_args)
         data = self.transform(data, [self.rating_threshold])
         
+        # save important attributes to class
+        self.user_to_id = user_to_id
+        self.item_to_id = item_to_id
+        
         # save the processed data into .pt file
         os.makedirs(self.processed_dir, exist_ok=True)
         torch.save(data, os.path.join(self.processed_dir, f"data_amazon_{self.datasetSetup.category}.pt"))

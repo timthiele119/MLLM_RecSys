@@ -55,6 +55,8 @@ class AmazonDatasetSetup:
             self.deleteUnusedItems()
         else:
             print(f"Dataset already downloaded and preprocessed, no further action from DatasetSetup object.")
+        
+        self.getUsersItemsCount()
     
     
     @tryExcept
@@ -216,3 +218,10 @@ class AmazonDatasetSetup:
                     os.remove(item_path)
         
         print(f"File number after cleaning: {len(os.listdir(self.rawUnwrappedItemDataDir))}")
+        
+        
+    def getUsersItemsCount(self):
+        self.interactionData = pd.read_csv(self.root / "raw" / "Interactions" / f"{self.category}_Preprocessed.csv.gz")
+        no_users = len(self.interactionData["user_id"].unique())
+        no_items = len(self.interactionData["parent_asin"].unique())
+        print(f"Number of users in dataset: {no_users, no_items}")
